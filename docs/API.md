@@ -1,0 +1,9 @@
+# API Reference
+Base URL: http://127.0.0.1:8000
+- GET /api/health
+- POST /api/events
+- GET /api/alerts
+- PATCH /api/alerts/{id}/status?status=ACKNOWLEDGED
+- GET /api/dashboard/summary
+- GET /api/dashboard/events
+- WS /ws/alerts
