@@ -33,7 +33,18 @@ const API =
 function formatIST(value, options = {}) {
   if (!value) return "—";
 
-  return new Date(value).toLocaleString("en-IN", {
+  let timestamp = String(value);
+
+  // Backend timestamps without timezone information are UTC.
+  // Explicitly mark them as UTC before converting to IST.
+  if (
+    !timestamp.endsWith("Z") &&
+    !/[+-]\d{2}:?\d{2}$/.test(timestamp)
+  ) {
+    timestamp = timestamp.replace(" ", "T") + "Z";
+  }
+
+  return new Date(timestamp).toLocaleString("en-IN", {
     timeZone: "Asia/Kolkata",
     ...options,
   });
