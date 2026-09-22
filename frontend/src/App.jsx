@@ -27,6 +27,19 @@ const API =
   import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
 
 /* =========================================================
+   INDIA STANDARD TIME FORMATTER
+========================================================= */
+
+function formatIST(value, options = {}) {
+  if (!value) return "—";
+
+  return new Date(value).toLocaleString("en-IN", {
+    timeZone: "Asia/Kolkata",
+    ...options,
+  });
+}
+
+/* =========================================================
    STAT CARD
 ========================================================= */
 
@@ -372,14 +385,14 @@ function AlertDetails({ alert, onClose }) {
               {alert.created_at && (
                 <DetailField
                   label="Alert Created"
-                  value={new Date(alert.created_at).toLocaleString()}
+                  value={formatIST(alert.created_at)}
                 />
               )}
 
               {alert.timestamp && (
                 <DetailField
                   label="Event Timestamp"
-                  value={new Date(alert.timestamp).toLocaleString()}
+                  value={formatIST(alert.timestamp)}
                 />
               )}
             </div>
@@ -593,9 +606,7 @@ export default function App() {
     [...e]
       .reverse()
       .forEach((event) => {
-        const key = new Date(
-          event.timestamp
-        ).toLocaleTimeString([], {
+        const key = formatIST(event.timestamp, {
           hour: "2-digit",
           minute: "2-digit",
         });
@@ -921,9 +932,11 @@ export default function App() {
                       {/* Time */}
 
                       <td>
-                        {new Date(
-                          x.created_at
-                        ).toLocaleTimeString()}
+                        {formatIST(x.created_at, {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                          second: "2-digit",
+                        })}
                       </td>
 
                       {/* Source */}
