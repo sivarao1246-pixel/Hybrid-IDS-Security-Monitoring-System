@@ -36,6 +36,8 @@ jobs:
 
       - name: Build frontend
         working-directory: frontend
+        env:
+          VITE_API_URL: https://hybrid-ids-security-monitoring-system.onrender.com
         run: npm run build
 
       - name: Upload Pages artifact
